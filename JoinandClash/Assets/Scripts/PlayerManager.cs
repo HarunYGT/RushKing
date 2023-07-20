@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    private bool MoveByTouch;
+    public bool MoveByTouch,gameState,attackToTheBoss;
     private Vector3 direction;
     public List<Rigidbody> rbList = new List<Rigidbody>();
     [SerializeField] private float runSpeed,velocity,swipeSpeed,roadSpeed;
@@ -25,14 +25,16 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         rbList.Add(transform.GetChild(0).GetComponent<Rigidbody>());
-
+        gameState = true;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+       if(gameState)
+       {
+         if (Input.GetMouseButtonDown(0))
         {
             MoveByTouch = true;
         }
@@ -71,10 +73,13 @@ public class PlayerManager : MonoBehaviour
                     stickman_rb.rotation = Quaternion.Slerp(stickman_rb.rotation,Quaternion.identity, Time.deltaTime * velocity );
                 }
             }
-
+       }
     }
-    private void FixedUpdate(){
-        if (MoveByTouch)
+    private void FixedUpdate()
+    {
+      if(gameState)
+      {
+          if (MoveByTouch)
             {
                 Vector3 displacement = new Vector3(direction.x,0f,0f) * Time.fixedDeltaTime;
             
@@ -86,5 +91,6 @@ public class PlayerManager : MonoBehaviour
                 foreach (var stickman_rb in rbList)
                     stickman_rb.velocity = Vector3.zero;
             }
+      }
     }
 }

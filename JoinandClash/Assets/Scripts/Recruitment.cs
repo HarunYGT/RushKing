@@ -5,10 +5,11 @@ public class Recruitment : MonoBehaviour
 {
     private void OnCollisionEnter(Collision other){
         if(other.collider.CompareTag("add")){
-            Debug.Log("Diğer karakter eklendi.");
             PlayerManager.Instance.rbList.Add(other.collider.GetComponent<Rigidbody>());
 
             other.transform.parent = null;
+
+            other.transform.GetComponent<MemberManager>().member = true;
 
             other.transform.parent = PlayerManager.Instance.transform;
 

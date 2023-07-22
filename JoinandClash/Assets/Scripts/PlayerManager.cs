@@ -74,6 +74,14 @@ public class PlayerManager : MonoBehaviour
                 }
             }
        }
+       else{
+        if(!BossManager.Instance.BossIsAlive){
+            foreach (var stickMan in rbList)
+            {
+                stickMan.GetComponent<Animator>().SetFloat("attackmode",4f);
+            }
+        }
+       }
     }
     private void FixedUpdate()
     {

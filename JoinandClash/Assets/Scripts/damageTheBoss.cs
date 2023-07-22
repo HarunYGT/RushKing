@@ -11,7 +11,7 @@ public class damageTheBoss : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
-        if(other.CompareTag("Boss")){
+        if(other.CompareTag("Boss") && Random.Range(0,2) == 1){
             BossManager.Instance.Health--;
             BossManager.Instance.Health_bar_amount.text = BossManager.Instance.Health.ToString();
             BossManager.Instance.HealthBar.value = BossManager.Instance.Health--;

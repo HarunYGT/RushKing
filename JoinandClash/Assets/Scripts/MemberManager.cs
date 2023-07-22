@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MemberManager : MonoBehaviour
@@ -20,8 +21,8 @@ public class MemberManager : MonoBehaviour
         Boss = GameObject.FindWithTag("Boss").transform;
         rb = GetComponent<Rigidbody>();
         _capsuleCollider = GetComponent<CapsuleCollider>();
-
-        Health = 5;
+ 
+        Health = 1;
 
         
     }
@@ -71,6 +72,34 @@ public class MemberManager : MonoBehaviour
     {
         character_animator.SetFloat("attackmode",Random.Range(0,3));
 
-        print("Attack changed.");
+    }
+    private void OnCollisionEnter(Collision other){
+        if(other.collider.CompareTag("damage"))
+        {
+            Health--;
+            if(Health <=0)
+            {
+                Instantiate(particle_death,transform.position,Quaternion.identity);
+                if(gameObject.name != PlayerManager.Instance.rbList.ElementAt(0).name)
+                {
+                    gameObject.SetActive(false);
+                    transform.parent = null;
+                }
+                else{
+                    _capsuleCollider.enabled = false; 
+                    transform.GetChild(0).gameObject.SetActive(false);
+                    transform.GetChild(1).gameObject.SetActive(false);
+                }
+                BossManager.Instance.LockOnTarget =false;
+                for(int i = 0; i<BossManager.Instance.Enemies.Count;i++)
+                {
+                    if(BossManager.Instance.Enemies.ElementAt(i).name == gameObject.name)
+                    {
+                        BossManager.Instance.Enemies.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

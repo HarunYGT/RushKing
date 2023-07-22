@@ -1593,8 +1593,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character_animator: {fileID: 0}
-  particle_death: {fileID: 0}
-  Health: 0
+  particle_death: {fileID: 1543762254676055857, guid: 43af81830ba264b42a6df68b27dc20e1,
+    type: 3}
+  Health: 1
   MinDistanceOfEnemey: 0.5
   MaxDistanceOfEnemy: 3
   moveSpeed: 1
